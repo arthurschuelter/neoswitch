@@ -1,4 +1,4 @@
-# Neoswitcher Roadmap
+# neoswitch Roadmap
 
 A Neovim profile switcher written in Go with a Bubble Tea TUI.
 
@@ -12,9 +12,9 @@ A Neovim profile switcher written in Go with a Bubble Tea TUI.
 ## Target architecture
 
 ```
-neoswitcher/
+neoswitch/
 ├── cmd/
-│   └── neoswitcher/
+│   └── neoswitch/
 │       └── main.go          # wiring only: build dependencies, start the TUI
 ├── internal/
 │   ├── paths/               # resolve ~/.config, nvim path, profiles path (XDG aware)
@@ -54,7 +54,7 @@ neoswitcher/
 - [ ] Create `internal/profile` with a `Manager` struct exposing `List`, `Create`, `Switch`, `Import`, `Active`
 - [ ] Define typed errors and replace string errors
 - [ ] Create `internal/tui` with the root model and one file per screen
-- [ ] Reduce `cmd/neoswitcher/main.go` to wiring only
+- [ ] Reduce `cmd/neoswitch/main.go` to wiring only
 - [ ] Create `internal/testutil` with a helper that builds a fake config home in `t.TempDir()`
 - [ ] Unit tests for `paths` (XDG set, XDG unset, missing `$HOME`)
 - [ ] Unit tests for `profile.Manager` (see the testing strategy below)
@@ -63,26 +63,26 @@ neoswitcher/
 ### Phase 2: i18n
 - [ ] Create `internal/i18n` with a `Translator` (`T(key string, args ...any) string`)
 - [ ] Locale files as JSON, embedded with `go:embed` (start with `en` and `pt-BR`)
-- [ ] Detect language from `NEOSWITCHER_LANG`, then `LC_ALL` / `LANG`, then fall back to `en`
+- [ ] Detect language from `neoswitch_LANG`, then `LC_ALL` / `LANG`, then fall back to `en`
 - [ ] Fallback chain: `pt-BR` → `pt` → `en`; a missing key falls back to English, never to an empty string
 - [ ] Replace every hardcoded string in `tui` with translation keys (for example `list.help`, `create.prompt`, `error.exists`)
 - [ ] Test that every locale contains the same keys as `en.json`
 - [ ] Test that every placeholder (`{{.Name}}`) in a translation matches the one in `en.json`
 - [ ] Test the fallback chain (`pt-BR` → `pt` → `en`) and the missing-key behavior
-- [ ] Test language detection from `NEOSWITCHER_LANG`, `LC_ALL` and `LANG`
+- [ ] Test language detection from `neoswitch_LANG`, `LC_ALL` and `LANG`
 - [ ] Contribution guide: how to add a new language with one file and no code changes
 
 ### Phase 3: Settings, persistence and CLI commands
-- [ ] Create `internal/config` storing `config.toml` (or JSON) in `~/.config/neoswitcher/`
+- [ ] Create `internal/config` storing `config.toml` (or JSON) in `~/.config/neoswitch/`
 - [ ] Settings screen with language selector (persisted)
 - [ ] Remember the last active profile
 - [ ] Create `internal/cli` with non-interactive subcommands that reuse `profile.Manager` (no logic duplicated from the TUI):
-  - `neoswitcher` with no arguments opens the TUI
-  - `neoswitcher list` prints profiles and marks the active one
-  - `neoswitcher current` prints the active profile name
-  - `neoswitcher switch <name>` switches and exits
-  - `neoswitcher create <name>` creates a profile
-  - `neoswitcher import <name>` imports `~/.config/nvim`
+  - `neoswitch` with no arguments opens the TUI
+  - `neoswitch list` prints profiles and marks the active one
+  - `neoswitch current` prints the active profile name
+  - `neoswitch switch <name>` switches and exits
+  - `neoswitch create <name>` creates a profile
+  - `neoswitch import <name>` imports `~/.config/nvim`
   - `--lang <code>` flag to override the language
   - `--help` and per-command usage text, translated through `i18n`
 - [ ] Decide between the standard library `flag` package and `cobra` (cobra adds help, completion and nested commands)
@@ -106,14 +106,14 @@ neoswitcher/
 - [ ] Search and filter in the profile list
 - [ ] Show per-profile info (path, last used, size, plugin manager detected)
 - [ ] Launch `nvim` directly with the selected profile
-- [ ] `neoswitcher run <name> [-- nvim args]`: set `NVIM_APPNAME=<name>` and start `nvim` without changing the active profile, so two profiles can run in two terminals at once (depends on the symlink vs `NVIM_APPNAME` decision)
+- [ ] `neoswitch run <name> [-- nvim args]`: set `NVIM_APPNAME=<name>` and start `nvim` without changing the active profile, so two profiles can run in two terminals at once (depends on the symlink vs `NVIM_APPNAME` decision)
 - [ ] Windows support (junctions or `NVIM_APPNAME`, since symlinks need privileges)
 
 ### Phase 6: Distribution
 - [ ] CI with `go vet`, `staticcheck` and `go test -race -cover ./...`
 - [ ] Run CI on Linux, macOS and Windows, since symlink behavior differs
 - [ ] Coverage report with a minimum threshold for `profile` and `i18n`
-- [ ] Make it installable as a command: `go build -o neoswitcher ./cmd/neoswitcher`, and `go install .../cmd/neoswitcher@latest` once the module path is set
+- [ ] Make it installable as a command: `go build -o neoswitch ./cmd/neoswitch`, and `go install .../cmd/neoswitch@latest` once the module path is set
 - [ ] Document that `$(go env GOPATH)/bin` must be in `PATH` for `go install`
 - [ ] Release binaries for Linux, macOS and Windows (GoReleaser)
 - [ ] Homebrew tap and AUR package

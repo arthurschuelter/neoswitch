@@ -1,4 +1,4 @@
-module neoswitcher
+module neoswitch
 
 go 1.27.3
 

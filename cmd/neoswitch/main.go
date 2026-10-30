@@ -1,7 +1,7 @@
-// Neoswitcher - gerenciador de perfis do Neovim com TUI (Bubble Tea).
+// Neoswitch - gerenciador de perfis do Neovim com TUI (Bubble Tea).
 //
 // Como funciona:
-//   - Os perfis ficam em  $XDG_CONFIG_HOME/neoswitcher/profiles/<nome>
+//   - Os perfis ficam em  $XDG_CONFIG_HOME/neoswitch/profiles/<nome>
 //   - ~/.config/nvim passa a ser um symlink para o perfil ativo
 //   - Na primeira execução, verifica se já existe ~/.config/nvim e oferece
 //     importá-lo como primeiro perfil (sem perder nada).
@@ -27,8 +27,8 @@ import (
 
 type paths struct {
 	nvim     string // ~/.config/nvim
-	root     string // ~/.config/neoswitcher
-	profiles string // ~/.config/neoswitcher/profiles
+	root     string // ~/.config/neoswitch
+	profiles string // ~/.config/neoswitch/profiles
 }
 
 func resolvePaths() (paths, error) {
@@ -40,7 +40,7 @@ func resolvePaths() (paths, error) {
 		}
 		cfg = filepath.Join(home, ".config")
 	}
-	root := filepath.Join(cfg, "neoswitcher")
+	root := filepath.Join(cfg, "neoswitch")
 	return paths{
 		nvim:     filepath.Join(cfg, "nvim"),
 		root:     root,
@@ -324,7 +324,7 @@ func (m model) updateList(key tea.KeyMsg, isKey bool) (tea.Model, tea.Cmd) {
 
 func (m model) View() string {
 	var b strings.Builder
-	b.WriteString(titleStyle.Render("Neoswitcher") + "\n\n")
+	b.WriteString(titleStyle.Render("Neoswitch") + "\n\n")
 
 	switch m.screen {
 	case screenImport:
