@@ -13,7 +13,7 @@ Keep multiple Neovim configurations switch between them in a keystroke.
 ## Install
 
 ```bash
-git clone <repo-url> neoswitch
+git clone https://github.com/arthurschuelter/neoswitch
 cd neoswitch
 go mod tidy
 go build -o neoswitch .
